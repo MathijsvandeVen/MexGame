@@ -6,12 +6,15 @@ public class GameState : MonoBehaviour {
 
     public List<Player> Players;
     public int CurrentPlayerId = 0;
+    public int LoserPlayerId = 0;
 
     public int[] DieScores;
     public int CurrentScore;
     //public bool[] DiesToBeHeld;
 
     public int[] PlayerScores;
+
+    public bool IsEndOfRound;
 
     // Use this for initialization
     void Start () {

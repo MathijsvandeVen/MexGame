@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     private GameState gameState;
     private ScoreManager scoreManager;
-    
+
     // Use this for initialization
     void Start()
     {
@@ -38,20 +39,61 @@ public class GameManager : MonoBehaviour
     }
 
     public void EndTurn()
-    {
-        gameState.PlayerScores[gameState.CurrentPlayerId] = gameState.CurrentScore;
+    { gameState.PlayerScores[gameState.CurrentPlayerId] = gameState.CurrentScore;
+        gameState.Players[gameState.CurrentPlayerId].HasThrownThisTurn = true;
 
-        TurnReset();
-        gameState.CurrentPlayerId = (gameState.CurrentPlayerId + 1) % gameState.Players.Count;
+        IsEndOfRound();
+        if (gameState.IsEndOfRound)
+        {
+            findLoser(scoreManager.FindLowestScore(gameState.PlayerScores));
+        }
+        else
+        {
+            TurnReset();
+            gameState.CurrentPlayerId = (gameState.CurrentPlayerId + 1) % gameState.Players.Count;
+        }
+        Debug.Log("######################");
+        Debug.Log("End of round: " + gameState.IsEndOfRound);
+        Debug.Log("Score Iris: " + gameState.PlayerScores[0]);
+        Debug.Log("Iris heeft gegooid: " + gameState.Players[0].HasThrownThisTurn.ToString());
+
+        Debug.Log("Score Mathijs: " + gameState.PlayerScores[1]);
+        Debug.Log("Mathijs heeft gegooid: " + gameState.Players[1].HasThrownThisTurn.ToString());
+        Debug.Log("Loser :  " + gameState.LoserPlayerId);
     }
 
     public void TurnReset()
     {
         gameState.CurrentScore = 0;
-        gameState.PlayerScores = new int[gameState.Players.Count];
+        gameState.DieScores = new int[gameState.Players.Count];
     }
-    
-   
+
+    public void RoundReset()
+    {
+        TurnReset();
+        gameState.PlayerScores =  new int[gameState.Players.Count];
+        foreach (Player player in gameState.Players)
+        {
+            //player.HasThrownThisTurn = false;
+        }
+        gameState.LoserPlayerId = 0;
+    }
+
+    private void IsEndOfRound()
+    {
+        if (gameState.Players.Where(x => x.HasThrownThisTurn == false).Count() > 0)
+        {
+            gameState.IsEndOfRound = false;
+        }
+        gameState.IsEndOfRound = true;
+    }
+
+    private void findLoser(int lowestScore)
+    {
+        // This doesnt really work with ties yet.
+        gameState.LoserPlayerId =  gameState.Players.First(player => player.CurrentScore == lowestScore).Id;
+    }
+
     // Update is called once per frame
     void Update()
     {

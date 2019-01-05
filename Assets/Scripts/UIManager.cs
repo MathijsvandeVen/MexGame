@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour {
    
     public Text PlayerName;
     public Text ScoreLabel;
+    public Text MessageLabel;
     private GameState gameState;
     
 	void Start () {
@@ -18,6 +19,10 @@ public class UIManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if(gameState.IsEndOfRound)
+        {
+            MessageLabel.text = gameState.Players[gameState.LoserPlayerId].Name + " is the loser!";
+        }
         PlayerName.text = gameState.Players[gameState.CurrentPlayerId].Name;
         ScoreLabel.text = gameState.CurrentScore.ToString();
 	}

@@ -141,9 +141,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentPlayerId: 0
+  LoserPlayerId: 0
   DieScores: 
   CurrentScore: 0
   PlayerScores: 
+  IsEndOfRound: 0
 --- !u!4 &354833370
 Transform:
   m_ObjectHideFlags: 0
@@ -756,12 +758,12 @@ GameObject:
   - component: {fileID: 1323008748}
   - component: {fileID: 1323008747}
   m_Layer: 5
-  m_Name: ErrorMessageLabel
+  m_Name: MessageLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1323008746
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1189,6 +1191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: {fileID: 1144741763}
   ScoreLabel: {fileID: 1476101902}
+  MessageLabel: {fileID: 1323008747}
 --- !u!1 &2073168121
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
@@ -43,5 +44,10 @@ public class ScoreManager : MonoBehaviour
             result = (dieScores[0] * 100);
         }
         return result;
+    }
+
+    public int FindLowestScore(int[] scores)
+    {
+        return scores.Min();
     }
 }
